@@ -5,14 +5,59 @@ struct SeqList{
 	int length;
 };
 
-void main()
+void InitList(struct SeqList *L)   //理解为设定线性表名字为L
+{
+	L->length=0;     //顺序表初始化即将表的长度设为0
+}
+
+void CreatList(struct SeqList *L) 
+{
+	//int i;
+	printf("输出线性表的长度：");	scanf("%d",&(L->length));    //电脑取表的的长度
+	for()
+}
+
+void PrinList(struct SeqList *L)
 {
 	int i;
+	for(i=0;i<L->length;i++)	printf("%4d\n",L->data[i]);      //因为数组下标从0开始 所以L存放只能到L->length
+	printf("\n线性表的长度是：");	printf("%d\n",L->length);
+}
+
+void Prinl(struct SeqList *L)     //待定为查找l
+{
+	int i;
+	printf("\n输入你要查找的元素下标：");  scanf("%d",&i);
+	if(i>=0&&i<L->length)	printf("%d\n",L->data[i]);
+	else printf("你所输入的下标不在范围之内！\n");
+}
+
+void DeleList(struct SeqList *L)
+{
+	int i,j;
+	printf("\n输入你要删除的元素下标：");  scanf("%d",&j);
+	if(j>=0&&j<L->length)	
+	{
+		for(i=j;i<L->length;i++)
+		{
+			L->data[i]=L->data[i+1];
+		}
+		L->length--;
+	}
+	else printf("你所输入的下标不在范围之内！\n");
+}
+
+void main()
+{
 	struct SeqList a;
 	InitList(&a);   //对表的初始化
 	CreatList(&a);   //建立新的线性表
 	PrinList(&a);   //输出线性表
-	printf("请输入以下值（在下标对应的元素之前插入50这个元素）：");  
-	InstList(&a,i);
+	Prinl(&a);    //查找下标元素
+	DeleList(&a);   //删除下标为i的元素
 	PrinList(&a);   //输出线性表
+	//printf("请输入以下值（在下标对应的元素之前插入50这个元素）：");  
+	//InstList(&a,i);
+	//PrinList(&a);   //输出线性表
 }
+
