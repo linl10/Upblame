@@ -1,0 +1,18 @@
+#include"stdio.h"
+#define ListSize 100
+struct SeqList{
+	int data[ListSize];
+	int length;
+};
+
+void main()
+{
+	int i;
+	struct SeqList a;
+	InitList(&a);   //对表的初始化
+	CreatList(&a);   //建立新的线性表
+	PrinList(&a);   //输出线性表
+	printf("请输入以下值（在下标对应的元素之前插入50这个元素）：");  
+	InstList(&a,i);
+	PrinList(&a);   //输出线性表
+}
