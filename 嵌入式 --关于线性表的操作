@@ -24,7 +24,7 @@ void PrinList(struct SeqList *L)
 	printf("\n线性表的长度是：");	printf("%d\n",L->length);
 }
 
-void Prinl(struct SeqList *L)     //待定为查找l
+void Prinl(struct SeqList *L)     //待定为查找
 {
 	int i;
 	printf("\n输入你要查找的元素下标：");  scanf("%d",&i);
