@@ -1,0 +1,45 @@
+#include"stdio.h"
+#define Listsize 100
+struct SeqList{
+	char name[Listsize];
+	char time[Listsize];
+	char content[2000];
+	int length;
+};
+
+void InitList(struct SeqList *L)		//表的初始化
+{
+	L->length=0;    
+}
+
+void creatList(struct SeqList *L)		//建立一个表
+{
+	int n,i;
+	printf("本次要新建的文档数：");	scanf("%d",n);
+	L->length=n;
+	for(i=0;i<n;i++)
+	{
+	printf("重命名文档名\n"); scanf("%s",&L->name[i]);
+	printf("该文档日期为\n"); scanf("%s",&L->time[i]);
+	printf("输入文档内容\n"); scanf("%s",&L->content[i]);
+	}
+	
+}
+
+void PrinList(struct SeqList *L)
+{
+	int i;
+	for(i=0;i<L->length;i++)
+	{
+		printf("文档名:%s",L->name[i]);
+		printf("存储时间：%s",L->time[i]);
+		printf("文本内容：%s",L->content[i]);
+	}
+}
+
+void main()
+{
+	struct SeqList a;
+	InitList(&a);
+	PrinList(&a);
+}
