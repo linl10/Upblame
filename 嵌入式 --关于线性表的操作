@@ -24,7 +24,7 @@ void CreatList(struct SeqList *L)
 void PrinList(struct SeqList *L)
 {
 	int i;
-	for(i=0;i<L->length;i++)	printf("%4d\n",L->data[i]);      //因为数组下标从0开始 所以L存放只能到L->length
+	for(i=0;i<L->length;i++)	printf("%4d\n",L->data[i]);      //因为数组下标从0开始 所以i只能到L->length
 	printf("\n线性表的长度是：");	printf("%d\n",L->length);
 }
 
@@ -53,15 +53,17 @@ void DeleList(struct SeqList *L)
 
 void InstList(struct SeqList *L)
 {
-	int i,n;
-	printf("请输入以下值（在下标对应的元素之前插入50这个元素）：");     //进行在线性表里插入元素
+	int i,n,x;
+	printf("请输入以下值（在下标对应的元素之前插入50这个元素）：");     //进行在线性表中插入元素
 	scanf("%d",&n);
-	for(i=L->length+1;i>=n;i--)
+	printf("输入插入的元素data：");
+	scanf("%d",&x);
+	for(i=L->length+1;i>=n;i--)      //尝试过正向的后移 操作过程中i+1的值被覆盖 导致i之后的值都被i给赋予
 	{
-		L->data[i+1]=L->data[i];
-		L->length=5;
+		L->data[i+1]=L->data[i];	
 	}
-	L->data[n]=50;
+	L->length+=1;
+	L->data[n]=x;	
 }
 
 void main()
