@@ -1,0 +1,38 @@
+#include"stdio.h"
+struct ListNode{
+	char data;		//数据
+	struct ListNode *next;		//指针域      
+};
+
+struct ListNode * createList()
+{
+	char ch;
+	struct ListNode* head;
+	struct ListNode* s;
+	head=NULL;
+	ch=getchar();
+	while(ch!='\n')
+	{
+		s=(struct ListNode *)malloc(sizeof(struct ListNode));		//开辟新节点 
+		s->data=ch;                                                 //把ch给放给s数据域
+		s->next=head;												//待认为：
+		head=s;
+		ch=getchar();
+	}
+	return head;
+}
+
+
+void main()
+{
+	struct ListNode *p,*q;
+	q=createList();
+	while(q)
+	{
+		printf("%c",q->data);
+		p=q->next;
+		free(q);
+		q=p;
+	}
+	printf("\n");
+}
