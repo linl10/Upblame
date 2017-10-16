@@ -22,17 +22,52 @@ struct ListNode * createList()
 	return head;
 }
 
-
-void main()
+void PrinList(struct ListNode *q)
 {
-	struct ListNode *p,*q;
-	q=createList();
+	struct ListNode *p;
 	while(q)
 	{
 		printf("%c",q->data);
 		p=q->next;
-		free(q);
+	//	free(q);           //编写函数来进行循环，head参数不会变，即可多次进行输出（在不释放q节点的情况下）
 		q=p;
 	}
 	printf("\n");
+}
+
+struct ListNode * DeletList(struct ListNode *head)
+{
+	struct ListNode *p=head,*s;
+	int j=1,i;
+	printf("需要删除第几个元素?\n");		scanf("%d",&i);
+	if(i==1)
+	{
+		head=head->next;
+		free(p);
+		return head;
+	}
+	while(p->next != NULL && j<i-1)    //    j=1 p->h j=2 p->NULL 2=3-1 所以报错 
+	{
+		p=p->next;
+		j++;
+	}
+	if(p->next==NULL || j!=i-1)
+	{
+		printf("\n删除位置不合理!\n");
+		return 0;
+	}
+	s=p->next;
+	p->next=p->next->next;
+	//free(s);
+	return head;
+}
+
+
+void main()
+{
+	struct ListNode *head;
+	head=createList();	
+	PrinList(head);
+	head=DeletList(head);
+	PrinList(head);
 }
