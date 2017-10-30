@@ -1,0 +1,58 @@
+#include"stdio.h"
+#define StackSize 100
+struct SeqStack {
+	char data[StackSize];
+	int top;
+};
+
+void InitStack(struct SeqStack *S)  //将顺序栈置空
+{
+	S->top=-1;
+}
+
+int StackEmpty(struct SeqStack *S)  //判栈空
+{
+	return S->top==-1;
+}
+
+int StackFull(struct SeqStack *S)  //判栈满
+{
+	return S->top==StackSize-1;
+}
+
+void Push(struct SeqStack *S,char x)  //进栈
+{
+	if (StackFull(S))
+	{
+		printf("栈已满");
+	}
+	S->data[++S->top]=x;
+}
+
+char Pop(struct SeqStack *S)  //退栈
+{
+	if(StackEmpty(S)) 
+	{
+		printf("栈下溢");
+	}
+	return S->data[S->top-1];
+}
+
+char StackTop(struct SeqStack *S)  //取栈顶元素
+{
+	if (StackEmpty(S))  
+	{
+		printf("栈为空");
+	}
+	return S->data[S->top];
+}
+
+void main()
+{
+	struct SeqStack *S;
+	InitStack(S);
+	Push(S,'a');
+	Push(S,'b');
+	Push(S,'c');
+	StackTop(S);
+}
