@@ -1,0 +1,118 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct{  
+	char name[20];
+    char sex;		//性别，'F'表示女性，'M'表示男性
+}Person;			//定义数据元素的类型
+typedef  Person ElemType;    
+#define Maxsize 100
+typedef struct
+{ 
+	ElemType elem[Maxsize] ;
+    int front,rear;
+}SqQueue;         //循环队列的结构定义 
+
+
+int InitQueue(SqQueue *Q) //初始化循环队列
+{	
+	Q->front=0;
+	Q->rear=0;
+	return 1;
+}
+
+
+int EnQueue(SqQueue *Q,ElemType e) //入队
+{	
+	if ((Q->rear+1)%Maxsize==Q->front)
+		return 0;
+________________1________________
+	Q->elem[Q->rear]=e;
+	return 1;}
+
+
+int DeQueue(SqQueue *Q,ElemType *e)  //出队 
+{
+	if (Q->front==Q->rear)
+		return 0;
+_________________2_____________________
+	*e=Q->elem[Q->front];	
+	return 1;}
+
+
+void printQueue (SqQueue *Q)  //打印循环队列
+{ 	
+	int i;
+	i=Q->front;
+	while (i!=Q->rear)
+    {
+		i=(i+1) % Maxsize;
+		printf("%s  ", Q->elem[i].name);	
+	}
+}
+
+
+int QueueEmpty(SqQueue *Q)  //判队空
+{	
+	if( ______________3______________)
+		return 1;
+	else return 0;
+}
+
+
+void DancePartner(Person dancer[],int num)
+{     
+	//结构数组dancer中存放跳舞的男女，num是跳舞的人数。
+	int i; SqQueue Mdancers,Fdancers;
+	Person p;
+	_________________4__________ //男士队列初始化
+	_______________5_______________  //女士队列初始化
+	for(i=0;i<num;i++)
+	{   //依次将跳舞者依其性别入队
+		if( dancer[i] .sex=='F')
+			EnQueue(&Fdancers, dancer[i] );   //排入女队
+		else  _______________6___________________   //排入男队
+	}
+	printf("The dancing partners are: \n \n");
+	while(!QueueEmpty(&Fdancers)&&!QueueEmpty(&Mdancers))
+	{                   //依次输入男女舞伴名
+		___________7_______________    //女士出队
+		printf("%s        ",p.name);  //打印出队女士名
+		DeQueue(&Mdancers,&p);     //男士出队
+		printf("%s\n",p.name);    //打印出队男士名    
+	}
+		if(!QueueEmpty( &Fdancers ))
+		{ //输出剩余女士的名字          
+			printf("\n The women waitin for the next round.\n");
+			printQueue (&Fdancers );
+		}              
+		if(__________8__________________)
+		{  //输出男队剩余人数的名字                         
+			printf("\n The men waiting for the next   round.\n");
+			printQueue (&Mdancers );
+		}	
+}
+
+
+void inputdata(Person dancer[],int num) //输入舞者人数及信息
+{
+	int i;
+	for(i=0;i<num;i++)
+	{
+		printf(" dancer %d's name:",i+1);
+		scanf("%s",dancer[i].name);
+		printf(" dancer %d's sex:",i+1);
+		getchar();
+		scanf("%c",&dancer[i].sex);
+	}
+}
+
+
+void main()
+{	
+    Person dancer[20];
+	int num,i=0;
+	printf("input the number of dancers:\n");
+	scanf("%d",&num);
+	inputdata(dancer,num);
+    DancePartner(dancer,num);
+}
