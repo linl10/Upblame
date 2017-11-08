@@ -23,7 +23,7 @@ int InitQueue(SqQueue *Q) //初始化循环队列
 
 int EnQueue(SqQueue *Q,ElemType e) //入队
 {	
-	if ((Q->rear+1)%Maxsize==Q->front)
+	if ((Q->rear+1)%Maxsize==Q->front)     //这里是判断队列是否为满
 		return 0;
 	Q->rear = (Q->rear+1)%Maxsize;
 	Q->elem[Q->rear]=e;
@@ -53,7 +53,7 @@ void printQueue (SqQueue *Q)  //打印循环队列
 
 int QueueEmpty(SqQueue *Q)  //判队空
 {	
-	if(Q->front=Q->rear)
+	if(Q->front==Q->rear)      //这里有在实际写的时候出现问题：写成=，这样把值给覆盖了。
 		return 1;
 	else return 0;
 }
@@ -75,7 +75,7 @@ void DancePartner(Person dancer[],int num)
 	printf("The dancing partners are: \n \n");
 	while(!QueueEmpty(&Fdancers)&&!QueueEmpty(&Mdancers))
 	{                   //依次输入男女舞伴名
-		DeQueue(&Mdancers,&p);    //女士出队
+		DeQueue(&Fdancers,&p);    //女士出队
 		printf("%s\n",p.name);  //打印出队女士名
 		DeQueue(&Mdancers,&p);     //男士出队
 		printf("%s\n",p.name);    //打印出队男士名    
