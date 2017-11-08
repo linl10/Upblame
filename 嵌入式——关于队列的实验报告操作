@@ -25,7 +25,7 @@ int EnQueue(SqQueue *Q,ElemType e) //入队
 {	
 	if ((Q->rear+1)%Maxsize==Q->front)
 		return 0;
-________________1________________
+	Q->rear = (Q->rear+1)%Maxsize;
 	Q->elem[Q->rear]=e;
 	return 1;}
 
@@ -34,7 +34,7 @@ int DeQueue(SqQueue *Q,ElemType *e)  //出队
 {
 	if (Q->front==Q->rear)
 		return 0;
-_________________2_____________________
+	Q->front = (Q->front+1)%Maxsize;
 	*e=Q->elem[Q->front];	
 	return 1;}
 
@@ -53,7 +53,7 @@ void printQueue (SqQueue *Q)  //打印循环队列
 
 int QueueEmpty(SqQueue *Q)  //判队空
 {	
-	if( ______________3______________)
+	if(Q->front=Q->rear)
 		return 1;
 	else return 0;
 }
@@ -64,19 +64,19 @@ void DancePartner(Person dancer[],int num)
 	//结构数组dancer中存放跳舞的男女，num是跳舞的人数。
 	int i; SqQueue Mdancers,Fdancers;
 	Person p;
-	_________________4__________ //男士队列初始化
-	_______________5_______________  //女士队列初始化
+	InitQueue(&Mdancers);  //男士队列初始化
+	InitQueue(&Fdancers);  //女士队列初始化
 	for(i=0;i<num;i++)
 	{   //依次将跳舞者依其性别入队
 		if( dancer[i] .sex=='F')
 			EnQueue(&Fdancers, dancer[i] );   //排入女队
-		else  _______________6___________________   //排入男队
+		else  EnQueue(&Mdancers, dancer[i] );   //排入男队
 	}
 	printf("The dancing partners are: \n \n");
 	while(!QueueEmpty(&Fdancers)&&!QueueEmpty(&Mdancers))
 	{                   //依次输入男女舞伴名
-		___________7_______________    //女士出队
-		printf("%s        ",p.name);  //打印出队女士名
+		DeQueue(&Mdancers,&p);    //女士出队
+		printf("%s\n",p.name);  //打印出队女士名
 		DeQueue(&Mdancers,&p);     //男士出队
 		printf("%s\n",p.name);    //打印出队男士名    
 	}
@@ -85,7 +85,7 @@ void DancePartner(Person dancer[],int num)
 			printf("\n The women waitin for the next round.\n");
 			printQueue (&Fdancers );
 		}              
-		if(__________8__________________)
+		if(!QueueEmpty( &Mdancers ))
 		{  //输出男队剩余人数的名字                         
 			printf("\n The men waiting for the next   round.\n");
 			printQueue (&Mdancers );
