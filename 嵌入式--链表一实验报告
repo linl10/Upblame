@@ -1,0 +1,61 @@
+#include "stdio.h"
+typedef   char  elemtype;
+typedef  struct  node{
+        elemtype  data;
+        struct   node  *next;
+} NODE,*LINKLIST;
+/*初始化链表并用头插法创建链表*/
+LINKLIST  createlistf()
+{       
+	char ch;
+    LINKLIST  head;
+    NODE  *p;
+    head=(LINKLIST )malloc(sizeof(NODE));
+    head->next=NULL;
+    ch=getchar();
+    while(ch!='\n')
+	   {  
+			p=(NODE *)malloc(sizeof(NODE));
+	        p->data=ch;
+			p->next=head->next;
+			head->next=p;
+			ch=getchar();//吞掉回车符
+        }
+     return (head);
+}
+
+
+NODE *lbcz(NODE *h,int i)  //查找序号为i的数据元素
+{  
+	NODE *p=h;
+	int j=0;
+	while(p->next&&j<i)
+	{
+		p=p->next; // 补充p->next 或p++
+		j++;
+	}
+  return p;  
+}
+
+/*链表的输出*/
+void printlink(NODE *h)
+{
+	NODE *p;
+	p=h->next;
+	printf("\n");
+	while (p!=NULL)
+	{
+		printf("%c",p->data);
+		p=p->next;
+	}
+	printf("\n");
+}
+
+
+main()
+{
+	LINKLIST L;
+	L=createlistf();//创建链表  输入（a b c d e ）
+	printlink(L);//输出链表
+	printf("result=%c\n",lbcz(L,3)->data);//查找序号为3的结点，并输出数据元素的值
+}
