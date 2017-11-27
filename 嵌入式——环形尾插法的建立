@@ -1,0 +1,65 @@
+#include "stdio.h"
+typedef   char  elemtype;
+typedef  struct  node{
+	elemtype  data;
+	struct   node  *next;
+} NODE,*LINKLIST;
+/*用尾插法创建带头结点带尾指针的循环单链表*/
+LINKLIST  createlist()
+{       
+	char ch;
+	LINKLIST  teil;
+	NODE  *p;
+	teil=(LINKLIST )malloc(sizeof(NODE));
+	teil->next=teil;
+	printf("\ninput data:");
+	ch=getchar();
+	while(ch!='$')
+	{  
+		p=(NODE *)malloc(sizeof(NODE));        //此前在这里卡壳：1.此处是循环链表 2.没有意识到当P->next已经有
+		p->data=ch;							   //新的指向方，旧的指向线会断开 3.链表的teil始终在移动    最终次链表形成一个
+		p->next=teil->next;					   //环形的循环链表
+		teil->next=p;
+		teil=p;
+		ch=getchar();
+	}
+	return teil;
+}
+/*链表的输出*/
+void printlink(NODE *h)
+{
+	NODE *p=h;
+	if(p->next!=h)			//此处间接判断链表是否为空
+	{
+		printf("result is:");
+		p=p->next;			//指向表头结点
+		while (p->next!=h)
+		{
+			printf("%3c",p->next->data);
+			p=p->next;
+		}
+       printf("%3c",p->next->data);//打印出表尾结点
+	}
+	else
+		printf("no data");
+}
+
+LINKLIST  Merge(LINKLIST L1,LINKLIST L2)
+{
+    NODE *p; 	 p=L1->next; 	L1->next=L2->next->next; // 补充
+	free(L2->next); 	L2->next=p; 	return L2;
+}
+
+main()
+{
+	LINKLIST L1,L2,L3;
+	L1=createlist();					//创建链表L1 输入任意数据
+	printlink(L1);						//遍历链表L1
+	getchar();							//防止读入回车键
+	L2=createlist();					//创建链表L2 输入任意数据
+	printlink(L2);						//遍历链表L2
+		printf("\n");
+	L3=Merge(L1,L2);								//创建合并后的链表L3
+	 printf("After merge ");
+	printlink(L3);		//遍历链表L3 			 
+}
