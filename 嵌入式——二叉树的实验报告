@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<windows.h> 
+#include <math.h>                   
+/*二叉树的链式存储表示 */
+typedef char DataType;		/*定义DataType的实际类型 */
+typedef struct node
+{	DataType data;
+struct node *lchild, *rchild;	/*左右孩子指针 */
+} BinTNode;					/*结点类型 */
+typedef BinTNode *BinTree;
+void  gotoxy(int  x,   int y)   {   //光标定位到指定列行
+	COORD   c;   
+	c.X  =  x -1;   
+	c.Y  =  y -1;   
+	SetConsoleCursorPosition (GetStdHandle(STD_OUTPUT_HANDLE),   c);     } 
+/*扩展的先序遍历构造二叉树*， 参照课本p170，*/   
+void CreateBinTree(BinTree *T)
+{
+	char ch; 
+	if ((ch=getchar())=='.')
+		*T=NULL;
+	else
+	{	/*读入非空格 */
+		*T=(BinTNode *)malloc(sizeof(BinTNode));	/*生成结点 */
+		(*T)->data=ch;
+	    CreateBinTree(&((*T)->lchild));			/*构造左子树 */
+        CreateBinTree(&((*T)->rchild));;			/*构造右子树 */
+	}}
+/*前序遍历二叉树 */
+void Preorder(BinTree T)
+{
+	if(T)
+	{
+		printf("%c",T->data);	/*访问结点  */
+		Preorder(T->lchild);                
+		Preorder(T->rchild);
+	}
+}
+void inorder(BinTree T)
+{	
+	if(T)
+	{
+		inorder(T->lchild);  
+		printf("%c",T->data);	/*访问结点  */
+		inorder(T->rchild);
+	}
+}
+void Postorder(BinTree T)//后序遍历二叉树
+{
+	if(T)
+	{
+	Postorder(T->lchild);  
+	Postorder(T->rchild);
+	printf("%c",T->data);	
+	}
+}
+void InorderLeafes(BinTree T) //中序遍历输出二叉树的叶子结点
+{
+	 if(T)
+	{
+		InorderLeafes(T->lchild); 
+		if(!T->lchild && !T->rchild)
+		{
+			printf("%c",T->data);	/*访问结点  */
+		}
+		InorderLeafes(T->rchild);
+	}                                 
+}
+int GetHightOfTree(BinTree T)
+{
+	int rh=0,lh=0;
+	if(!T)
+		return 0;
+	else
+	{
+		lh=GetHightOfTree(T->lchild);
+		rh=GetHightOfTree(T->rchild);
+		return (lh>rh?lh:rh)+1;
+	}
+}
+void DisplayBinTree(BinTree T,int col,int row,int h)  
+{   
+	if (T)
+	{   gotoxy(col,row);//光标定位到col列row 行
+		printf("%c",T->data);
+		DisplayBinTree(T->lchild,col-h,row+1,h/2);
+		DisplayBinTree(T->rchild,col+h,row+1,h/2);
+	}
+}
+void DisplayTree(BinTree T)//树形结构打印二叉树
+{
+	int k=0;
+	k=GetHightOfTree(T);
+	DisplayBinTree(T, (int)(pow(2,k-1)*2+1),4,(int)pow(2,k-1)) ;
+	printf("\n\n\n\n\n\n\n");
+}
+main()
+{	
+	BinTree T;
+	printf("请输入先序序列（虚结点用空格表示）：\n");     
+	CreateBinTree(&T);  //创建一高度小于6的任意形状的二叉树
+	printf("输出二叉树的树形结构"); 
+	DisplayTree(T);  //输出二叉树的树形结构
+	printf("树的高度=%d\n",GetHightOfTree(T));  //输出树的高度
+	printf("前序遍历：\n");
+	Preorder(T);
+	printf("\n中序遍历：\n");
+	inorder(T);
+	printf("\n后序遍历：\n");
+    Postorder(T);
+	printf("\n中序遍历叶子结点：\n");
+    InorderLeafes(T);
+	printf("\n");
+}
