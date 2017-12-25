@@ -1,0 +1,102 @@
+#include "stdio.h" 
+#define MAX 50
+typedef struct
+{	
+	char num[4];//学号 长度不超过三位
+	char name[8];//姓名
+	int grade;//成绩
+}student;
+typedef struct
+{	
+	student elem[MAX];
+	int length;
+} list;
+
+
+void display(list L)//打印学生成绩表
+{	
+	int i;
+		printf("学号      姓名      成绩\n",i);
+	for(i=1;i<=L.length;i++)
+	{
+		printf("%-11s",L.elem[i].num);
+		printf("%-11s",L.elem[i].name);
+		printf("%-11d\n",L.elem[i].grade);
+		
+	}
+	printf("\n");
+}
+
+
+void createList(list *L)
+/*学生信息表的建立， 注意起始存储位置下标为1*/
+{
+	int i;
+	printf("请输入表的长度:\n");
+	scanf("%d",&(L->length));
+	for(i=1;i<=L->length;i++)
+	{
+		printf("请输入第%d个学生的学号：\n",i);
+		scanf("%s",L->elem[i].num);
+		printf("请输入第%d个学生的姓名：\n",i);
+		scanf("%s",L->elem[i].name);
+		printf("请输入第%d个学生的成绩：\n",i);
+		scanf("%d",&(L->elem[i].grade));	
+	}
+	printf("排序前建立的学生基本信息表：\n");
+	display(*L);
+}
+/*先调用直接插入排序，对学生基本信息表按成绩从大到小进行排序*/
+
+
+//void InsertSort(list *L)//使用监视哨
+//{	                                  }
+
+
+void   SelectSort( list *L)/*再调用简单选择排序，对学生基本信息表按成绩从小到大进行排序*/
+/*简单选择排序*/ 
+{
+	int min,i,j;
+	list* A;
+	for(i=0;i<L->length;i++)
+	{
+		min=i;
+		for(j=i+1;j<=L->length;j++)
+		{
+			if(L->elem[min].grade>L->elem[j].grade) min=j;
+		}
+		if(min!=i)
+		{
+			A->elem[0]=L->elem[i];
+			L->elem[i]=L->elem[min];
+			L->elem[min]=A->elem[0];
+		}
+		//printf("第%d趟：",i+1);
+		//for(k=0;k<n;k++)
+		//{
+		//	printf("/n");	
+		//}
+	}
+} 
+
+
+void bubsort(list *L)/*最后掉用冒泡排序，对学生基本信息表按成绩从大到小进行排序*/
+{            
+
+}
+
+
+void main()
+{	
+	int i;	list L;
+	createList(&L);
+	//InsertSort(&L);//调用直接插入排序要求按成绩从大到小排序
+	//printf("显示直接插入排序后的学生基本信息表（从大到小）：\n");
+	//display(L);
+	SelectSort(&L);//调用简单选择排序要求按成绩从小到大排序
+	printf("显示简单选择排序后的学生基本信息表（从小到大）：\n");
+	display(L);
+	bubsort(&L);//调用冒泡排序要求按成绩从大到小排序
+	printf("显示冒泡排序后的学生基本信息表（从大到小）：\n");
+	display(L);
+}
